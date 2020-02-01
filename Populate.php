@@ -37,8 +37,8 @@ class Populate
 {
 	private $blockSize = 500;
 	private $refreshRate = 0;
-	private $loremIpsum = null;
-	private $ounters = array();
+	private $loremIpsum;
+	private $counters = array();
 
 	private $timeStart = 0;
 
@@ -66,7 +66,7 @@ class Populate
 
 		$this->loremIpsum = new LoremIpsumGenerator();
 
-		// Determine our 'currents'
+		$end = false;
 		foreach ($this->counters as $key => $val)
 		{
 			$request = $smcFunc['db_query']('', 'SELECT COUNT(*) FROM {db_prefix}' . $key);
@@ -75,7 +75,6 @@ class Populate
 			if ($key != 'topics' && $this->counters[$key]['current'] < $this->counters[$key]['max'])
 			{
 				$func = 'make' . ucfirst($key);
-				$end = false;
 				break;
 			}
 			else

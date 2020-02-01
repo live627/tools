@@ -40,7 +40,7 @@ $context['override_security'] = false;
  * and tranlsate it. ;D
  * 
  */
-function fixp_english ()
+function fixp_english()
 {
 	global $txt;
 
@@ -65,7 +65,7 @@ fixp_main();
 // and then let's throw out the template! :P
 obExit(null, null, true);
 
-function fixp_menu_button (&$buttons)
+function fixp_menu_button(&$buttons)
 {
 	global $boardurl, $txt, $context;
 	fixp_loadLanguage();
@@ -81,7 +81,7 @@ function fixp_menu_button (&$buttons)
 	);
 }
 
-function fixp_loadLanguage ()
+function fixp_loadLanguage()
 {
 	global $user_info;
 
@@ -91,7 +91,7 @@ function fixp_loadLanguage ()
 		return $flang();
 }
 
-function fixp_main ()
+function fixp_main()
 {
 	global $txt, $sourcedir, $boarddir, $boardurl, $context, $user_info, $smcFunc;
 
@@ -101,7 +101,7 @@ function fixp_main ()
 	fixp_loadLanguage();
 
 	// Sorry, only logged in admins...unless you want so.
-	if(empty($context['override_security']))
+	if (empty($context['override_security']))
 		isAllowedTo('admin_forum');
 
 	$context['install'] = isset($_GET['uninstall']) ? 0 : 1;
@@ -224,7 +224,7 @@ function fixp_main ()
 	createList($listOptions);
 }
 
-function list_getPacks ()
+function list_getPacks()
 {
 	global $smcFunc, $context;
 
@@ -245,7 +245,7 @@ function list_getPacks ()
 	return $installed;
 }
 
-function list_getNumPacks ()
+function list_getNumPacks()
 {
 	global $smcFunc, $context;
 

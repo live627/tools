@@ -42,7 +42,7 @@ class Populate
 
 	private $timeStart = 0;
 
-	public function __construct ($options = array())
+	public function __construct($options = array())
 	{
 		global $smcFunc;
 
@@ -58,7 +58,7 @@ class Populate
 		$this->counters['topics']['current'] = 0;
 		$this->counters['messages']['max'] = 3000000;
 		$this->counters['messages']['current'] = 0;
-		$this->timeStart = microtime(TRUE);
+		$this->timeStart = microtime(true);
 
 		// Override defaults
 		foreach ($options as $_key => $_value)
@@ -74,7 +74,7 @@ class Populate
 			$smcFunc['db_free_result']($request);
 			if ($key != 'topics' && $this->counters[$key]['current'] < $this->counters[$key]['max'])
 			{
-				$func = 'make'.ucfirst($key);
+				$func = 'make' . ucfirst($key);
 				$end = false;
 				break;
 			}
@@ -87,7 +87,7 @@ class Populate
 		$this->complete($end);
 	}
 
-	private function makeCategories ()
+	private function makeCategories()
 	{
 		global $sourcedir;
 		require_once($sourcedir . '/Subs-Categories.php');
@@ -105,7 +105,7 @@ class Populate
 		$this->pause();
 	}
 
-	private function makeBoards ()
+	private function makeBoards()
 	{
 		global $sourcedir;
 		require_once($sourcedir . '/Subs-Boards.php');
@@ -121,7 +121,7 @@ class Populate
 			if (mt_rand() < (mt_getrandmax() / 2))
 			{
 				$boardOptions = array_merge($boardOptions, array(
-					'target_board' => mt_rand(1, $this->counters['boards']['current']-1),
+					'target_board' => mt_rand(1, $this->counters['boards']['current'] - 1),
 					'move_to' => 'child',
 				));
 			}
@@ -132,7 +132,7 @@ class Populate
 		$this->pause();
 	}
 
-	private function makeMembergroups ()
+	private function makeMembergroups()
 	{
 		global $smcFunc;
 
@@ -159,7 +159,7 @@ class Populate
 		$this->pause();
 	}
 
-	private function makeMembers ()
+	private function makeMembers()
 	{
 		global $sourcedir, $modSettings;
 		require_once($sourcedir . '/Subs-Members.php');
@@ -172,7 +172,7 @@ class Populate
 			$regOptions = array(
 				'interface' => 'admin',
 				'username' => 'Member ' . ++$this->counters['members']['current'],
-				'email' => 'member_' . $this->counters['members']['current'] . '@' . $_SERVER['SERVER_NAME'] . (strpos($_SERVER['SERVER_NAME'], '.') === FALSE ? '.com' : ''),
+				'email' => 'member_' . $this->counters['members']['current'] . '@' . $_SERVER['SERVER_NAME'] . (strpos($_SERVER['SERVER_NAME'], '.') === false ? '.com' : ''),
 				'password' => '',
 				'require' => 'nothing',
 				'send_welcome_email' => false,
@@ -187,7 +187,7 @@ class Populate
 		$this->pause();
 	}
 
-	private function makeMessages ()
+	private function makeMessages()
 	{
 		global $sourcedir;
 		require_once($sourcedir . '/Subs-Post.php');
@@ -195,13 +195,13 @@ class Populate
 		while ($this->counters['messages']['current'] < $this->counters['messages']['max'] && $this->blockSize--)
 		{
 			$msgOptions = array(
-				'subject' => trim($this->loremIpsum->getContent(mt_rand(1,6), 'txt')),
+				'subject' => trim($this->loremIpsum->getContent(mt_rand(1, 6), 'txt')),
 				'body' => trim($this->loremIpsum->getContent(mt_rand(5, 60), 'txt')),
 				'approved' => TRUE
 			);
 
 			$topicOptions = array(
-				'id' => $this->counters['topics']['current'] < $this->counters['topics']['max'] && mt_rand() < (int)(mt_getrandmax() * ($this->counters['topics']['max'] / $this->counters['messages']['max'])) ? 0 : ($this->counters['topics']['current'] < $this->counters['topics']['max'] ? mt_rand(1, ++$this->counters['topics']['current']) : mt_rand(1, $this->counters['topics']['current'])),
+				'id' => $this->counters['topics']['current'] < $this->counters['topics']['max'] && mt_rand() < (int) (mt_getrandmax() * ($this->counters['topics']['max'] / $this->counters['messages']['max'])) ? 0 : ($this->counters['topics']['current'] < $this->counters['topics']['max'] ? mt_rand(1, ++$this->counters['topics']['current']) : mt_rand(1, $this->counters['topics']['current'])),
 				'board' => mt_rand(1, $this->counters['boards']['max']),
 				'mark_as_read' => TRUE,
 			);
@@ -211,7 +211,7 @@ class Populate
 				'id' => $member,
 				'name' => 'Member ' . $member,
 				'email' => 'member_' . $member . '@' . $_SERVER['SERVER_NAME'] . '.com',
-				'update_post_count' => TRUE,
+				'update_post_count' => true,
 			);
 
 			createPost($msgOptions, $topicOptions, $posterOptions);
@@ -219,7 +219,7 @@ class Populate
 		$this->pause();
 	}
 
-	private function pause ($end = false)
+	private function pause($end = false)
 	{
 		if (!$end)
 		{
@@ -239,14 +239,14 @@ class Populate
 			echo '
 			' . $val['current'] . ' of ' . $val['max'] . ' ' . $key . ' created<br />';
 		echo '
-			Time taken for last request: ' . round(microtime(TRUE) - $this->timeStart, 3) . ' seconds';
+			Time taken for last request: ' . round(microtime(true) - $this->timeStart, 3) . ' seconds';
 
 		if ($end)
 			echo '<br /><br />
 			<b>Completed</b>';
 	}
 
-	private function fixupTopicsBoards ()
+	private function fixupTopicsBoards()
 	{
 		global $smcFunc, $sourcedir;
 
@@ -258,7 +258,7 @@ class Populate
 		);
 	}
 
-	private function complete ($end)
+	private function complete($end)
 	{
 		if ($end)
 		{
@@ -296,197 +296,197 @@ class Populate
  */
 class LoremIpsumGenerator
 {
-    private $words = array(
-        'lorem',
-        'ipsum',
-        'dolor',
-        'sit',
-        'amet',
-        'consectetur',
-        'adipiscing',
-        'elit',
-        'curabitur',
-        'vel',
-        'hendrerit',
-        'libero',
-        'eleifend',
-        'blandit',
-        'nunc',
-        'ornare',
-        'odio',
-        'ut',
-        'orci',
-        'gravida',
-        'imperdiet',
-        'nullam',
-        'purus',
-        'lacinia',
-        'a',
-        'pretium',
-        'quis',
-        'congue',
-        'praesent',
-        'sagittis',
-        'laoreet',
-        'auctor',
-        'mauris',
-        'non',
-        'velit',
-        'eros',
-        'dictum',
-        'proin',
-        'accumsan',
-        'sapien',
-        'nec',
-        'massa',
-        'volutpat',
-        'venenatis',
-        'sed',
-        'eu',
-        'molestie',
-        'lacus',
-        'quisque',
-        'porttitor',
-        'ligula',
-        'dui',
-        'mollis',
-        'tempus',
-        'at',
-        'magna',
-        'vestibulum',
-        'turpis',
-        'ac',
-        'diam',
-        'tincidunt',
-        'id',
-        'condimentum',
-        'enim',
-        'sodales',
-        'in',
-        'hac',
-        'habitasse',
-        'platea',
-        'dictumst',
-        'aenean',
-        'neque',
-        'fusce',
-        'augue',
-        'leo',
-        'eget',
-        'semper',
-        'mattis',
-        'tortor',
-        'scelerisque',
-        'nulla',
-        'interdum',
-        'tellus',
-        'malesuada',
-        'rhoncus',
-        'porta',
-        'sem',
-        'aliquet',
-        'et',
-        'nam',
-        'suspendisse',
-        'potenti',
-        'vivamus',
-        'luctus',
-        'fringilla',
-        'erat',
-        'donec',
-        'justo',
-        'vehicula',
-        'ultricies',
-        'varius',
-        'ante',
-        'primis',
-        'faucibus',
-        'ultrices',
-        'posuere',
-        'cubilia',
-        'curae',
-        'etiam',
-        'cursus',
-        'aliquam',
-        'quam',
-        'dapibus',
-        'nisl',
-        'feugiat',
-        'egestas',
-        'class',
-        'aptent',
-        'taciti',
-        'sociosqu',
-        'ad',
-        'litora',
-        'torquent',
-        'per',
-        'conubia',
-        'nostra',
-        'inceptos',
-        'himenaeos',
-        'phasellus',
-        'nibh',
-        'pulvinar',
-        'vitae',
-        'urna',
-        'iaculis',
-        'lobortis',
-        'nisi',
-        'viverra',
-        'arcu',
-        'morbi',
-        'pellentesque',
-        'metus',
-        'commodo',
-        'ut',
-        'facilisis',
-        'felis',
-        'tristique',
-        'ullamcorper',
-        'placerat',
-        'aenean',
-        'convallis',
-        'sollicitudin',
-        'integer',
-        'rutrum',
-        'duis',
-        'est',
-        'etiam',
-        'bibendum',
-        'donec',
-        'pharetra',
-        'vulputate',
-        'maecenas',
-        'mi',
-        'fermentum',
-        'consequat',
-        'suscipit',
-        'aliquam',
-        'habitant',
-        'senectus',
-        'netus',
-        'fames',
-        'quisque',
-        'euismod',
-        'curabitur',
-        'lectus',
-        'elementum',
-        'tempor',
-        'risus',
-        'cras'
-    );
+	private $words = array(
+		'lorem',
+		'ipsum',
+		'dolor',
+		'sit',
+		'amet',
+		'consectetur',
+		'adipiscing',
+		'elit',
+		'curabitur',
+		'vel',
+		'hendrerit',
+		'libero',
+		'eleifend',
+		'blandit',
+		'nunc',
+		'ornare',
+		'odio',
+		'ut',
+		'orci',
+		'gravida',
+		'imperdiet',
+		'nullam',
+		'purus',
+		'lacinia',
+		'a',
+		'pretium',
+		'quis',
+		'congue',
+		'praesent',
+		'sagittis',
+		'laoreet',
+		'auctor',
+		'mauris',
+		'non',
+		'velit',
+		'eros',
+		'dictum',
+		'proin',
+		'accumsan',
+		'sapien',
+		'nec',
+		'massa',
+		'volutpat',
+		'venenatis',
+		'sed',
+		'eu',
+		'molestie',
+		'lacus',
+		'quisque',
+		'porttitor',
+		'ligula',
+		'dui',
+		'mollis',
+		'tempus',
+		'at',
+		'magna',
+		'vestibulum',
+		'turpis',
+		'ac',
+		'diam',
+		'tincidunt',
+		'id',
+		'condimentum',
+		'enim',
+		'sodales',
+		'in',
+		'hac',
+		'habitasse',
+		'platea',
+		'dictumst',
+		'aenean',
+		'neque',
+		'fusce',
+		'augue',
+		'leo',
+		'eget',
+		'semper',
+		'mattis',
+		'tortor',
+		'scelerisque',
+		'nulla',
+		'interdum',
+		'tellus',
+		'malesuada',
+		'rhoncus',
+		'porta',
+		'sem',
+		'aliquet',
+		'et',
+		'nam',
+		'suspendisse',
+		'potenti',
+		'vivamus',
+		'luctus',
+		'fringilla',
+		'erat',
+		'donec',
+		'justo',
+		'vehicula',
+		'ultricies',
+		'varius',
+		'ante',
+		'primis',
+		'faucibus',
+		'ultrices',
+		'posuere',
+		'cubilia',
+		'curae',
+		'etiam',
+		'cursus',
+		'aliquam',
+		'quam',
+		'dapibus',
+		'nisl',
+		'feugiat',
+		'egestas',
+		'class',
+		'aptent',
+		'taciti',
+		'sociosqu',
+		'ad',
+		'litora',
+		'torquent',
+		'per',
+		'conubia',
+		'nostra',
+		'inceptos',
+		'himenaeos',
+		'phasellus',
+		'nibh',
+		'pulvinar',
+		'vitae',
+		'urna',
+		'iaculis',
+		'lobortis',
+		'nisi',
+		'viverra',
+		'arcu',
+		'morbi',
+		'pellentesque',
+		'metus',
+		'commodo',
+		'ut',
+		'facilisis',
+		'felis',
+		'tristique',
+		'ullamcorper',
+		'placerat',
+		'aenean',
+		'convallis',
+		'sollicitudin',
+		'integer',
+		'rutrum',
+		'duis',
+		'est',
+		'etiam',
+		'bibendum',
+		'donec',
+		'pharetra',
+		'vulputate',
+		'maecenas',
+		'mi',
+		'fermentum',
+		'consequat',
+		'suscipit',
+		'aliquam',
+		'habitant',
+		'senectus',
+		'netus',
+		'fames',
+		'quisque',
+		'euismod',
+		'curabitur',
+		'lectus',
+		'elementum',
+		'tempor',
+		'risus',
+		'cras'
+	);
 
-    private $wordsPerParagraph = 100;
+	private $wordsPerParagraph = 100;
 
-    private $wordsPerSentence = 24.460;
+	private $wordsPerSentence = 24.460;
 
-    /**
-     * @param $count
-     * @param string $format
-     * @param bool $loremipsum
-     * @return array|string
-     */
+	/**
+	 * @param $count
+	 * @param string $format
+	 * @param bool $loremipsum
+	 * @return array|string
+	 */
 	function getContent ($count, $format = 'html', $loremipsum = true)
 	{
 		$format = strtolower($format);
@@ -505,7 +505,7 @@ class LoremIpsumGenerator
 		}
 	}
 
-	private function getWords (&$arr, $count, $loremipsum)
+	private function getWords(&$arr, $count, $loremipsum)
 	{
 		$i = 0;
 		if ($loremipsum)
@@ -528,7 +528,7 @@ class LoremIpsumGenerator
 		}
 	}
 
-	private function getPlain ($count, $loremipsum, $returnStr = true)
+	private function getPlain($count, $loremipsum, $returnStr = true)
 	{
 		$words = array();
 		$this->getWords($words, $count, $loremipsum);
@@ -568,7 +568,7 @@ class LoremIpsumGenerator
 			return $sentences;
 	}
 
-	private function getText ($count, $loremipsum)
+	private function getText($count, $loremipsum)
 	{
 		$sentences = $this->getPlain($count, $loremipsum, false);
 		$paragraphs = $this->getParagraphArr($sentences);
@@ -583,7 +583,7 @@ class LoremIpsumGenerator
 		return implode("\n\n\t", $paragraphStr);
 	}
 
-	private function getParagraphArr ($sentences)
+	private function getParagraphArr($sentences)
 	{
 		$wordsPer = $this->wordsPerParagraph;
 		$sentenceAvg = $this->wordsPerSentence;
@@ -612,7 +612,7 @@ class LoremIpsumGenerator
 		return $paragraphs;
 	}
 
-	private function getHTML ($count, $loremipsum)
+	private function getHTML($count, $loremipsum)
 	{
 		$sentences = $this->getPlain($count, $loremipsum, false);
 		$paragraphs = $this->getParagraphArr($sentences);
@@ -628,7 +628,7 @@ class LoremIpsumGenerator
 		return implode("\n", $paragraphStr);
 	}
 
-	private function paragraphToString ($paragraph, $htmlCleanCode = false)
+	private function paragraphToString($paragraph, $htmlCleanCode = false)
 	{
 		$paragraphStr = '';
 		foreach ($paragraph as $sentence)
@@ -646,7 +646,7 @@ class LoremIpsumGenerator
 	* Inserts commas and periods in the given
 	* word array.
 	*/
-	private function punctuate (& $sentence)
+	private function punctuate(& $sentence)
 	{
 		$count = count($sentence);
 		$sentence[$count - 1] = $sentence[$count - 1] . '.';
@@ -672,7 +672,7 @@ class LoremIpsumGenerator
 	* sentence of the given length. Average and
 	* standard deviation are determined superficially
 	*/
-	private function numberOfCommas ($len)
+	private function numberOfCommas($len)
 	{
 		$avg = (float) log($len, 6);
 		$stdDev = (float) $avg / 6.000;
@@ -689,7 +689,7 @@ class LoremIpsumGenerator
 	*	Average: 24.46
 	*	Standard Deviation: 5.08
 	*/
-	private function gaussianSentence ()
+	private function gaussianSentence()
 	{
 		$avg = (float) 24.460;
 		$stdDev = (float) 5.080;
@@ -703,32 +703,32 @@ class LoremIpsumGenerator
 	* Source:
 	* 	http://us.php.net/manual/en/function.rand.php#53784
 	*/
-	private function gauss ()
+	private function gauss()
 	{   // N(0,1)
 		// returns random number with normal distribution:
 		//   mean=0
 		//   std dev=1
 
 		// auxilary vars
-		$x=$this->random_0_1();
-		$y=$this->random_0_1();
+		$x = $this->random_0_1();
+		$y = $this->random_0_1();
 
 		// two independent variables with normal distribution N(0,1)
-		$u=sqrt(-2*log($x))*cos(2*pi()*$y);
-		$v=sqrt(-2*log($x))*sin(2*pi()*$y);
+		$u = sqrt(-2 * log($x)) * cos(2 * pi() * $y);
+		$v = sqrt(-2 * log($x)) * sin(2 * pi() * $y);
 
 		// i will return only one, couse only one needed
 		return $u;
 	}
 
-	private function gauss_ms ($m=0.0,$s=1.0)
+	private function gauss_ms($m = 0.0, $s = 1.0)
 	{
-		return $this->gauss()*$s+$m;
+		return $this->gauss() * $s + $m;
 	}
 
-	private function random_0_1 ()
+	private function random_0_1()
 	{
-		return (float)rand()/(float)getrandmax();
+		return (float) rand() / (float) getrandmax();
 	}
 
 }

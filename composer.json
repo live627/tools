@@ -6,6 +6,6 @@
     }
   ],
   "require-dev": {
-    "live627/SMF2.1": "dev-unittest"
+    "simplemachines/smf2.1": "dev-unittest"
   }
 }

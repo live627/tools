@@ -1,3 +1,4 @@
+{
   "repositories": [
     {
       "url": "https://github.com/SimpleMachines/SMF2.1.git",
@@ -7,3 +8,4 @@
   "require-dev": {
     "SimpleMachines/SMF2.1": "dev-maaster"
   }
+}

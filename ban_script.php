@@ -639,7 +639,8 @@ function banScript()
 				$_REQUEST['u'] = $row['id_member'];
 
 				bans_BanEdit();
-				if (empty($ban_group_id)) {
+				if (empty($ban_group_id))
+				{
 					$id_ban = $smcFunc['db_query']('', '
 						SELECT id_ban_group
 						FROM {db_prefix}ban_groups

@@ -1,11 +1,11 @@
 {
   "repositories": [
     {
-      "url": "https://github.com/SimpleMachines/SMF2.1.git",
+      "url": "https://github.com/SimpleMachines/live627.1.git",
       "type": "vcs"
     }
   ],
   "require-dev": {
-    "SimpleMachines/SMF2.1": "dev-maaster"
+    "live627/SMF2.1": "dev-unittest"
   }
 }

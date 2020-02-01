@@ -197,13 +197,13 @@ class Populate
 			$msgOptions = array(
 				'subject' => trim($this->loremIpsum->getContent(mt_rand(1, 6), 'txt')),
 				'body' => trim($this->loremIpsum->getContent(mt_rand(5, 60), 'txt')),
-				'approved' => TRUE
+				'approved' => true
 			);
 
 			$topicOptions = array(
 				'id' => $this->counters['topics']['current'] < $this->counters['topics']['max'] && mt_rand() < (int) (mt_getrandmax() * ($this->counters['topics']['max'] / $this->counters['messages']['max'])) ? 0 : ($this->counters['topics']['current'] < $this->counters['topics']['max'] ? mt_rand(1, ++$this->counters['topics']['current']) : mt_rand(1, $this->counters['topics']['current'])),
 				'board' => mt_rand(1, $this->counters['boards']['max']),
-				'mark_as_read' => TRUE,
+				'mark_as_read' => true,
 			);
 
 			$member = mt_rand(1, $this->counters['members']['max']);
@@ -487,7 +487,7 @@ class LoremIpsumGenerator
 	 * @param bool $loremipsum
 	 * @return array|string
 	 */
-	function getContent ($count, $format = 'html', $loremipsum = true)
+	function getContent($count, $format = 'html', $loremipsum = true)
 	{
 		$format = strtolower($format);
 
@@ -704,7 +704,8 @@ class LoremIpsumGenerator
 	* 	http://us.php.net/manual/en/function.rand.php#53784
 	*/
 	private function gauss()
-	{   // N(0,1)
+	{
+// N(0,1)
 		// returns random number with normal distribution:
 		//   mean=0
 		//   std dev=1
